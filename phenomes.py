@@ -5,7 +5,8 @@ Largely copied from neat-python. (Copyright 2015-2017, CodeReclaimers, LLC.)
 '''
 
 from util import itervalues
-import numpy as np
+from typing import List
+
 
 def creates_cycle(connections, test):
     """
@@ -29,6 +30,7 @@ def creates_cycle(connections, test):
 
         if num_added == 0:
             return False
+
 
 def required_for_output(inputs, outputs, connections):
     """
@@ -58,6 +60,7 @@ def required_for_output(inputs, outputs, connections):
         s = s.union(t)
 
     return required
+
 
 def feed_forward_layers(inputs, outputs, connections):
     """
@@ -93,8 +96,16 @@ def feed_forward_layers(inputs, outputs, connections):
 
     return layers
 
+
 class FeedForwardCPPN():
-    def __init__(self, inputs, outputs, node_evals, nodes=None, mapping_tuples=None):
+    def __init__(
+        self,
+        inputs: List,
+        outputs: List,
+        node_evals,
+        nodes=None,
+        mapping_tuples=None
+    ):
         '''
         Feed forward representation of a CPPN.
 
@@ -105,11 +116,11 @@ class FeedForwardCPPN():
         mapping_tuples -- mapping tuples associated with each output node
         '''
         self.input_nodes = inputs
-        self.output_nodes = {key:mapping_tuples[key] for key in mapping_tuples} if mapping_tuples else outputs
+        self.output_nodes = {key: mapping_tuples[key] for key in mapping_tuples} if mapping_tuples else outputs
         self.node_evals = node_evals
-        self.values = {key:0.0 for key in inputs + outputs}
+        self.values = {key: 0.0 for key in inputs + outputs}
         self.nodes = nodes
-    
+
     def activate(self, inputs):
         if len(self.input_nodes) != len(inputs):
             raise RuntimeError("Expected {0:n} inputs, got {1:n}".format(
@@ -150,7 +161,15 @@ class FeedForwardCPPN():
             mapping_tuples[key] = genome.nodes[key].cppn_tuple
         for key in genome.bias_keys:
             mapping_tuples[key] = genome.nodes[key].cppn_tuple
-        return FeedForwardCPPN(genome.input_keys, genome.output_keys, node_evals, genome.nodes, mapping_tuples)
+            
+        return FeedForwardCPPN(
+            inputs=genome.input_keys,
+            outputs=genome.output_keys,
+            node_evals=node_evals,
+            nodes=genome.nodes,
+            mapping_tuples=mapping_tuples
+        )
+
 
 class FeedForwardSubstrate():
     def __init__(self, inputs, bias, outputs, node_evals):
