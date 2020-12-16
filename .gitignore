@@ -1,3 +1,7 @@
 *.pyc
 /images
 /reports
+
+# Editor Settings
+.vscode
+
