@@ -4,16 +4,15 @@ Functions for drawing substrates and CPPNs using graphviz.
 Largely copied from neat-python. (Copyright 2015-2017, CodeReclaimers, LLC.)
 '''
 
-import graphviz 
-import matplotlib.pyplot as plt
-import cPickle as pickle
+import graphviz
+
 
 def draw_net(net, filename=None):
     '''
     Draw a network.
 
     net      -- the network to be drawn
-    filename -- name of image file to be rendered 
+    filename -- name of image file to be rendered
     '''
     # Dictionaries for node names and node colors
     node_names, node_colors = {}, {}
@@ -33,7 +32,7 @@ def draw_net(net, filename=None):
     for k in net.input_nodes:
         inputs.add(k)
         name = node_names.get(k, str(k))
-        input_attrs = {'style': 'filled', 
+        input_attrs = {'style': 'filled',
                        'shape': 'box',
                        'fillcolor': node_colors.get(k, 'lightgray')}
         dot.node(name, _attributes=input_attrs)

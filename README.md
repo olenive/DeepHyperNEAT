@@ -4,6 +4,9 @@
 
 NOTE: This implementation is under development. Updates will be pushed over time, bringing in new functionality, tests, and various other elements. The purpose of this repo is to allow others to have a codebase to understand, use, or improve upon DeepHyperNEAT.
 
+## Requirements
+Python 3.8.0 or later.
+
 ## Using DeepHyperNEAT
 To run DHN in its current form, you need to create a task file. For reference, see xor_study.py.
 
